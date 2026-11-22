@@ -1,0 +1,75 @@
+# Publishes @proginone/* to GitHub Packages (D-090, docs/guides/release.md).
+# - main: versions that are not on the registry yet, as `latest`, and the tag v<version>.
+# - develop: a snapshot `<next version>-next.<datetime>` as `next`, only while changesets are pending.
+name: publish
+
+on:
+  push:
+    branches: [main, develop]
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write # release tag on main
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: https://npm.pkg.github.com
+          scope: '@proginone'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Snapshot version (develop)
+        id: snapshot
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          if ls .changeset/*.md 2>/dev/null | grep -qv '/README.md$'; then
+            pnpm changeset version --snapshot next
+            echo "pending=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No pending changesets; nothing to snapshot."
+          fi
+
+      - name: Build
+        if: github.ref == 'refs/heads/main' || steps.snapshot.outputs.pending == 'true'
+        run: pnpm build
+
+      - name: Publish next (develop)
+        if: steps.snapshot.outputs.pending == 'true'
+        run: pnpm changeset publish --tag next --no-git-tag
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish latest (main)
+        if: github.ref == 'refs/heads/main'
+        run: pnpm changeset publish --no-git-tag
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag release (main)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          version="$(node tools/release-version.ts)"
+          if [ -z "$version" ]; then echo "No publishable packages yet."; exit 0; fi
+          if git ls-remote --exit-code --tags origin "refs/tags/v${version}" >/dev/null; then
+            echo "v${version} already tagged."
+          else
+            git tag "v${version}" "$GITHUB_SHA"
+            git push origin "v${version}"
+          fi

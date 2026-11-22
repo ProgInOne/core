@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+*.tsbuildinfo
+*.tgz
+
+# Test outputs
+coverage/
+
+# Env & logs
+.env
+.env.*
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/*
+
+# Local agent worktrees
+.claude/
