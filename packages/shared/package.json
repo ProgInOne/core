@@ -1,6 +1,6 @@
 {
   "name": "@proginone/shared",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "공용 타입, zod 스키마, API 계약",
   "type": "module",
   "repository": {
