@@ -51,6 +51,9 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
+      - name: Token contrast
+        run: pnpm check:contrast
+
       - name: Test
         run: pnpm test
 
