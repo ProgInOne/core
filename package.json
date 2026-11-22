@@ -1,0 +1,37 @@
+{
+  "name": "proginone-core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "ProgInOne 학습 언어 저장소들이 함께 쓰는 공통 패키지(@proginone/*)",
+  "type": "module",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit -p tsconfig.json && pnpm -r --parallel --if-present typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "pnpm -r --if-present build",
+    "check:links": "node tools/check-links.mjs",
+    "check:packages": "node tools/smoke-packages.ts",
+    "check:contrast": "pnpm --filter @proginone/ui check:contrast",
+    "changeset": "changeset",
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm check:contrast && pnpm test && pnpm check:links && pnpm build && pnpm check:packages"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^3.0.3",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "eslint": "^10.15.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^5.1.1"
+  }
+}
