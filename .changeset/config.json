@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/@changesets/config@4/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [],
+  "fixed": [["@proginone/*"]],
   "linked": [],
   "access": "public",
   "baseBranch": "develop",
