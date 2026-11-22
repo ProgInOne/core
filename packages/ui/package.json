@@ -1,6 +1,6 @@
 {
   "name": "@proginone/ui",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "디자인 토큰과 기본 React 컴포넌트",
   "type": "module",
   "repository": {

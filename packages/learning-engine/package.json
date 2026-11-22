@@ -1,6 +1,6 @@
 {
   "name": "@proginone/learning-engine",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "숙련도·FSRS·연습 세트 구성을 계산하는 순수 함수 학습 엔진",
   "type": "module",
   "repository": {
