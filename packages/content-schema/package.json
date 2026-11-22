@@ -1,0 +1,40 @@
+{
+  "name": "@proginone/content-schema",
+  "version": "0.0.0",
+  "description": "콘텐츠 원본(YAML·MDX)의 zod 스키마와 slug 규칙",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProgInOne/core.git",
+    "directory": "packages/content-schema"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./db": {
+      "source": "./src/db/index.ts",
+      "types": "./dist/db/index.d.ts",
+      "default": "./dist/db/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.4",
+    "zod": "^4.6.7"
+  }
+}

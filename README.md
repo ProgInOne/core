@@ -19,7 +19,7 @@ ProgInOne의 학습 언어 저장소들이 함께 쓰는 공통 패키지(`@prog
 |---|---|---|
 | `@proginone/learning-engine` | 숙련도·FSRS·연습 세트 구성을 계산하는 순수 함수 | [옮김](packages/learning-engine/README.md) |
 | `@proginone/ui` | 디자인 토큰과 기본 React 컴포넌트 | [옮김](packages/ui/README.md) |
-| `@proginone/content-schema` | 콘텐츠 원본의 zod 스키마와 content.db 스키마 | 예정(1차) |
+| `@proginone/content-schema` | 콘텐츠 원본의 zod 스키마와 content.db 스키마 | [옮김](packages/content-schema/README.md) |
 | `@proginone/shared` | 서버와 웹이 공유하는 타입, zod 스키마, API 계약 | 예정(1차) |
 | `@proginone/exercise-core` | 문제 유형 등록, 템플릿, 선택형 문제 채점 | 예정(2차) |
 | `@proginone/exercise-ui` | 문제 렌더러와 에디터(언어 모드는 주입) | 예정(2차) |
