@@ -1,5 +1,6 @@
 // @ts-check
 import js from '@eslint/js';
+import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -32,6 +33,11 @@ export default tseslint.config(
       eqeqeq: ['error', 'always'],
       'no-console': 'error',
     },
+  },
+  {
+    files: ['packages/ui/src/**/*.tsx'],
+    ...reactHooks.configs.flat['recommended-latest'],
+    languageOptions: { globals: { ...globals.browser } },
   },
   {
     files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
