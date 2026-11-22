@@ -3,7 +3,7 @@
 언어 저장소(`ProgInOne/javascript`, `ProgInOne/go`)가 공통 패키지를 설치하고, 버전을 고르고, 공통 패키지와 함께 고치는 방법입니다.
 
 - 대상: 언어 저장소 개발자, 기여자
-- 최종 수정: 2026-11-22
+- 최종 수정: 2026-11-23 (pnpm 12의 인증·공급망 설정)
 
 ## 레지스트리 설정
 
@@ -31,7 +31,7 @@ npm config set //npm.pkg.github.com/:_authToken "$(gh auth token)"
 ```
 
 - GitHub CLI 토큰을 쓰지 않으려면 `read:packages` 권한만 준 [classic 개인 토큰][pat]을 만들어 같은 자리에 넣습니다.
-- 토큰은 사용자 설정에만 둡니다. 저장소의 `.npmrc`에 쓰거나 커밋하지 않습니다.
+- 토큰은 사용자 설정에만 둡니다. 저장소의 `.npmrc`에 쓰거나 커밋하지 않습니다. pnpm 12는 저장소가 관리하는 `.npmrc`의 인증 설정을 무시합니다("repository-controlled registry credentials" 경고). `${NODE_AUTH_TOKEN}` 같은 환경 변수도 펼치지 않습니다.
 - `pnpm install`이 `401`이나 `403`으로 실패하면 토큰이 없거나 `read:packages` 권한이 없는 것입니다.
 
 [pat]: https://docs.github.com/ko/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token
@@ -56,6 +56,24 @@ steps:
     env:
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+### 공급망 지연 규칙
+
+pnpm 12는 기본으로 배포된 지 하루가 안 된 버전을 받지 않습니다(`minimumReleaseAge`).
+`next` 사전 배포판은 배포 몇 분 뒤에 쓰므로, 언어 저장소의 `pnpm-workspace.yaml`에서 `@proginone/*`를 이 규칙에서 뺍니다.
+
+```yaml
+minimumReleaseAgeExclude:
+  - '@proginone/*'
+```
+
+### 학습자에게 배포하기
+
+GitHub Packages는 공개 패키지도 토큰이 필요하므로, 언어 저장소의 릴리스 묶음에 `@proginone/*`를 동봉합니다.
+JavaScript 저장소는 `tools/vendor-proginone.mjs`가 `npm pack`으로 받아 묶음의 `vendor/`에 넣고 `overrides`(`file:vendor/…tgz`)와 잠금 파일을 다시 만듭니다([D-093][js-d093], [릴리스 절차 > 공통 패키지 동봉][js-vendor]).
+
+[js-d093]: https://github.com/ProgInOne/javascript/blob/develop/docs/decisions.md
+[js-vendor]: https://github.com/ProgInOne/javascript/blob/develop/docs/guides/release.md#공통-패키지-동봉
 
 ## 버전 고르기
 
