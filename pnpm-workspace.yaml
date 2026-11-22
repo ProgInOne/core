@@ -1,0 +1,6 @@
+packages:
+  - packages/*
+
+# Dependency build scripts are opt-in (same policy as the language repositories).
+allowBuilds:
+  esbuild: false
