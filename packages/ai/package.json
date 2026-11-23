@@ -1,0 +1,38 @@
+{
+  "name": "@proginone/ai",
+  "version": "0.2.0",
+  "description": "AI 제공자 어댑터(Codex App Server, Mock), AI 작업 정의, 컨텍스트 빌더, 언어별 튜터 프로필",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProgInOne/core.git",
+    "directory": "packages/ai"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts",
+    "!src/test",
+    "!src/provider/codex/testing"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "codex:record": "node src/provider/codex/testing/record-codex.ts"
+  },
+  "dependencies": {
+    "@proginone/shared": "workspace:^",
+    "zod": "^4.6.7"
+  }
+}
