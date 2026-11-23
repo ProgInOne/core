@@ -1,6 +1,6 @@
 {
   "name": "@proginone/exercise-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "공통 문제 위젯(확신도, 힌트, 피드백), 선택형 렌더러, 언어를 주입받는 코드 에디터",
   "type": "module",
   "repository": {

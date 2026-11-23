@@ -1,6 +1,6 @@
 {
   "name": "@proginone/exercise-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "문제 유형 레지스트리 팩토리, 유형 틀, 파라메트릭 템플릿 엔진, 선택형 문제 유형",
   "type": "module",
   "repository": {
