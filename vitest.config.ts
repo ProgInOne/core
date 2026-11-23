@@ -7,6 +7,9 @@ export default defineConfig({
     // Inside this repository, packages import each other's sources, not the built dist/.
     conditions: ['source'],
   },
+  // Tests in the `node` project resolve like server code (SSR), which has its own conditions.
+  // The rest of the list is Vite's default for server code.
+  ssr: { resolve: { conditions: ['source', 'module', 'node', 'development|production'] } },
   test: {
     passWithNoTests: true,
     projects: [
