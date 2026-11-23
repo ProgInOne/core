@@ -49,7 +49,7 @@ pnpm changeset
 
 - 각 패키지는 `packages/<이름>/`에 두고 `@proginone/<이름>`으로 배포합니다.
 - 배포 형식은 `tsc`로 빌드한 `dist/`(JS, `.d.ts`, 소스맵)입니다. TS 원본도 소스맵과 정의 이동을 위해 함께 넣되, 테스트 파일은 빼야 합니다.
-- `exports`의 각 항목은 `source`(TS 원본), `types`, `default` 조건을 둡니다. 이 저장소 안의 타입 검사와 테스트는 `source` 조건으로 원본을 읽고, 언어 저장소는 `dist/`를 읽습니다.
+- `exports`의 각 항목은 `source`(TS 원본), `types`, `default` 조건을 둡니다. 이 저장소 안의 타입 검사, 린트, 테스트는 `source` 조건으로 원본을 읽고(`tsconfig.base.json`의 `customConditions`, `vitest.config.ts`의 `resolve.conditions`), 빌드(`tsconfig.build.json`)와 언어 저장소는 `dist/`를 읽습니다. 그래서 다른 공통 패키지에 의존하는 패키지도 먼저 빌드하지 않고 검사할 수 있습니다.
 - 공통 패키지는 언어별 코드(코드 실행 샌드박스, 언어별 채점 검사, 에디터 언어 모드)에 의존하지 않습니다. 언어마다 달라지는 부분은 주입받는 확장 지점으로 둡니다.
 - `pack · consumer smoke` 검사는 묶은 패키지를 빈 프로젝트에 설치해 모든 `exports` 항목이 Node에서 열리고 타입이 잡히는지 확인합니다. 로컬에서는 `pnpm build && pnpm check:packages`입니다.
 
