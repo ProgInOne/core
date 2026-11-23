@@ -22,7 +22,7 @@ ProgInOne의 학습 언어 저장소들이 함께 쓰는 공통 패키지(`@prog
 | `@proginone/content-schema` | 콘텐츠 원본의 zod 스키마와 content.db 스키마 | [옮김](packages/content-schema/README.md) |
 | `@proginone/shared` | 서버와 웹이 공유하는 타입, zod 스키마, API 계약 | [옮김](packages/shared/README.md) |
 | `@proginone/exercise-core` | 문제 유형 레지스트리 팩토리, 템플릿, 선택형 문제 채점 | [옮김](packages/exercise-core/README.md) |
-| `@proginone/exercise-ui` | 문제 렌더러와 에디터(언어 모드는 주입) | 예정(2차) |
+| `@proginone/exercise-ui` | 공통 문제 위젯, 선택형 렌더러, 언어를 주입받는 코드 에디터 | [옮김](packages/exercise-ui/README.md) |
 | `@proginone/ai` | AI 작업 실행과 안전 장치(언어별 튜터 문구는 `TutorProfile`로 주입) | [옮김](packages/ai/README.md) |
 
 언어마다 다른 부분(콘텐츠, 코드 실행 샌드박스, 채점 검사, 에디터 언어 설정)은 언어 저장소에 둡니다.
