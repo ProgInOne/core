@@ -13,6 +13,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    // Inside this repository, packages read each other's sources (the `source` export condition).
+    "customConditions": ["source"],
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
