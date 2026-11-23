@@ -1,0 +1,35 @@
+{
+  "name": "@proginone/exercise-core",
+  "version": "0.1.0",
+  "description": "문제 유형 레지스트리 팩토리, 유형 틀, 파라메트릭 템플릿 엔진, 선택형 문제 유형",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProgInOne/core.git",
+    "directory": "packages/exercise-core"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts",
+    "!src/test"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  }
+}
