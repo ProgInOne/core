@@ -1,6 +1,6 @@
 {
   "name": "@proginone/ai",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "AI 제공자 어댑터(Codex App Server, Mock), AI 작업 정의, 컨텍스트 빌더, 언어별 튜터 프로필",
   "type": "module",
   "repository": {

@@ -1,5 +1,12 @@
 # @proginone/ai
 
+## 0.3.0
+
+### Patch Changes
+
+- Updated dependencies [2b3a63c]
+  - @proginone/shared@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
