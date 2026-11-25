@@ -1,5 +1,12 @@
 # @proginone/exercise-ui
 
+## 0.3.0
+
+### Patch Changes
+
+- @proginone/exercise-core@0.3.0
+  - @proginone/ui@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
