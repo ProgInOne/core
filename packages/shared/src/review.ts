@@ -1,9 +1,11 @@
 import { z } from 'zod';
 import { courseLanguageSchema } from './curriculum.ts';
 import {
+  ATTEMPT_OUTCOMES,
   CONFIDENCES,
   conceptRefSchema,
   masteryStageSchema,
+  PRACTICE_ITEM_STATUSES,
   PRACTICE_SET_KINDS,
   solutionViewSchema,
 } from './practice.ts';
@@ -139,6 +141,67 @@ export const mistakeDetailSchema = z.object({
   solutionSource: z.enum(['viewed', 'assessment']).nullable(),
 });
 export type MistakeDetail = z.infer<typeof mistakeDetailSchema>;
+
+// ── Practice set review ──────────────────────────────────────────────────────
+
+/**
+ * The learner's last counted attempt on an item of a finished set, as it was shown after
+ * grading.
+ */
+export const practiceReviewAttemptSchema = z.object({
+  outcome: z.enum(ATTEMPT_OUTCOMES),
+  confidence: z.enum(CONFIDENCES).nullable(),
+  /** The learner's own answer in the reference answer's shape (`none` if it cannot be shown). */
+  answer: solutionViewSchema,
+  /** Grader feedback messages as shown after the attempt. */
+  feedback: z.array(z.string()),
+  misconceptions: z.array(misconceptionRefSchema),
+  solutionViewed: z.boolean(),
+});
+export type PracticeReviewAttempt = z.infer<typeof practiceReviewAttemptSchema>;
+
+/**
+ * One item of a finished set in "푼 문제 돌아보기". Only what the learner has already seen, by the
+ * same rule as a mistake note: the explanation once an attempt on the item was graded, and the
+ * reference answer only when they opened it ("정답 보기") or a finished assessment revealed it.
+ */
+export const practiceReviewItemSchema = z.object({
+  itemId: z.string(),
+  position: z.int(),
+  exerciseId: z.string(),
+  /** Exercise type (`unknown` when the exercise left the content pack). */
+  type: z.string(),
+  difficulty: z.int().min(1).max(5),
+  /** Markdown prompt (empty when archived). */
+  prompt: z.string(),
+  /** Code shown with the prompt (the exercise's code or its public spec's code). */
+  code: z.string().nullable(),
+  codeLanguage: courseLanguageSchema.nullable(),
+  concept: conceptRefSchema.nullable(),
+  status: z.enum(PRACTICE_ITEM_STATUSES),
+  /** Counted attempts on this item. */
+  attempts: z.int().min(0),
+  /** Null when the item was never graded (skipped before any attempt). */
+  last: practiceReviewAttemptSchema.nullable(),
+  /** Null when no attempt on the item was graded: the explanation was never shown. */
+  explanation: z.string().nullable(),
+  /** Null while the learner has not seen the reference answer. */
+  solution: solutionViewSchema.nullable(),
+  archived: z.boolean(),
+  /** "다시 풀기" availability (the same exercise in an `extra` set). */
+  retry: z.object({ available: z.boolean(), blockedBy: z.enum(RETRY_BLOCKS).nullable() }),
+});
+export type PracticeReviewItem = z.infer<typeof practiceReviewItemSchema>;
+
+/**
+ * `GET /practice-sets/:id/review`: every item of a finished non-assessment set in set order (an
+ * assessment shows its own result).
+ */
+export const practiceSetReviewSchema = z.object({
+  setId: z.string(),
+  items: z.array(practiceReviewItemSchema),
+});
+export type PracticeSetReview = z.infer<typeof practiceSetReviewSchema>;
 
 // ── Mastery changes ──────────────────────────────────────────────────────────
 
